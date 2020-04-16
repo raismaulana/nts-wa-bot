@@ -14,7 +14,7 @@ class CreateResponseTable extends Migration
     public function up()
     {
         Schema::create('response', function (Blueprint $table) {
-            $table->increments('id_response');
+            $table->increments('id');
             $table->string('code', 191)->unique();
             $table->text('question');
             $table->text('answer');

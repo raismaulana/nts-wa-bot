@@ -14,7 +14,7 @@ class CreateAuthTable extends Migration
     public function up()
     {
         Schema::create('auth', function (Blueprint $table) {
-            $table->increments('id_auth');
+            $table->increments('id');
             $table->string('name', 255);
             $table->string('username', 191)->unique();
             $table->string('password', 255);

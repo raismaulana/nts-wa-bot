@@ -34491,6 +34491,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_App_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/App.vue */ "./resources/js/components/App.vue");
+/* harmony import */ var _components_Create_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Create.vue */ "./resources/js/components/Create.vue");
+/* harmony import */ var _components_Read_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Read.vue */ "./resources/js/components/Read.vue");
+/* harmony import */ var _components_Update_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Update.vue */ "./resources/js/components/Update.vue");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // import dependecies tambahan
@@ -34499,35 +34503,32 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"], vue_axios__WEBPACK_IMPORTED_MODULE_1___default.a, axios__WEBPACK_IMPORTED_MODULE_2___default.a); // import file yang dibuat tadi
-// import App from './components/App.vue';
-// import Create from './components/Create.vue';
-// import Read from './components/Read.vue';
-// import Update from './components/Update.vue';
-// membuat router
 
-var routes = [// {
-  //     name: 'read',
-  //     path: '/',
-  //     component: Read
-  // },
-  // {
-  //     name: 'create',
-  //     path: '/create',
-  //     component: Create
-  // },
-  // {
-  //     name: 'update',
-  //     path: '/detail/:id',
-  //     component: Update
-  // }
-];
+
+
+
+ // membuat router
+
+var routes = [{
+  name: 'read',
+  path: '/',
+  component: _components_Read_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+}, {
+  name: 'create',
+  path: '/create',
+  component: _components_Create_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+}, {
+  name: 'update',
+  path: '/detail/:id',
+  component: _components_Update_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+}];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',
   routes: routes
 });
 new Vue(Vue.util.extend({
   router: router
-}, App)).$mount("#app");
+}, _components_App_vue__WEBPACK_IMPORTED_MODULE_3__["default"])).$mount("#app");
 
 /***/ }),
 
@@ -34560,6 +34561,50 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/App.vue":
+/*!*****************************************!*\
+  !*** ./resources/js/components/App.vue ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\xampp\\htdocs\\nts-wa-bot\\resources\\js\\components\\App.vue'");
+
+/***/ }),
+
+/***/ "./resources/js/components/Create.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/Create.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\xampp\\htdocs\\nts-wa-bot\\resources\\js\\components\\Create.vue'");
+
+/***/ }),
+
+/***/ "./resources/js/components/Read.vue":
+/*!******************************************!*\
+  !*** ./resources/js/components/Read.vue ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\xampp\\htdocs\\nts-wa-bot\\resources\\js\\components\\Read.vue'");
+
+/***/ }),
+
+/***/ "./resources/js/components/Update.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/Update.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\xampp\\htdocs\\nts-wa-bot\\resources\\js\\components\\Update.vue'");
 
 /***/ }),
 
