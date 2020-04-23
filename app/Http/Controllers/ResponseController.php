@@ -2,44 +2,76 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-// import file model Person
 use App\Response;
+use Illuminate\Http\Request;
+use DataTables;
+use DB;
 
 class ResponseController extends Controller
 {
-    // mengambil semua data
-    public function all()
-    {
-        return Response::all();
+    public function getDataTable(){
+        $data = Response::all();
+        return Datatables::of($data)
+            ->addColumn('action', function($data){
+                return  '<a onclick="editDataResponse('. $data->id . ')" style="margin:2px;" class="btn btn-primary btn-xs"> Edit</a>' .
+                        '<a onclick="deleteDataResponse('. $data->id . ')" style="margin:2px;" class="btn btn-danger btn-xs ">Delete</a>';
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()->make(true);
     }
 
-    // mengambil data by id
-    public function show($id)
-    {
-        return Response::find($id);
+    public function getById($id) {
+        $result = DB::table('responses')->where('id', $id);
+        if ($result->exists()){
+            return response($result->get());
+        } else {
+            return response(['status' => false]);
+        }
+    }
+    
+    public function delete(Request $request) {
+        $status = Response::destroy($request->id);
+        if($status) {
+            return response()->json(null);
+        } else {
+            return response()->json($status = 420);
+        }
     }
 
-    // menambah data
-    public function store(Request $request)
+    public function post(Request $request)
     {
-        return Response::create($request->all());
+        $data['code'] = $request->code;
+        $data['question'] = str_replace('\r\n','\n',$request->question);
+        $data['answer'] = str_replace('\r\n','\n',$request->answer);
+        $status = Response::create($data);
+        if ($status) {
+            return response(['status' => true]);
+        } else {
+            return response(['status' => false]);
+        }
     }
 
-    // mengubah data
-    public function update($id, Request $request)
-    {
-        $response = Response::find($id);
-        $response->update($request->all());
-        return $response;
+    public function update(Request $request) {
+        $status = DB::table('responses')
+            ->where('id', $request->id)
+            ->update([
+                'question' => $request->question,
+                'answer' => $request->answer,
+            ]);
+        if ($status) {
+            return response(['status' => true]);
+        } else {
+            return response(['status' => false]);
+        }
     }
 
-    // menghapus data
-    public function delete($id)
+    public function checkCode($code)
     {
-        $response = Response::find($id);
-        $response->delete();
-        return 204;
+        $status = DB::table('responses')->where('code', $code);
+        if (!$status->exists()){
+            return response(['status' =>true]);
+        } else {
+            return response(['status' => false]);
+        }
     }
 }

@@ -2,44 +2,84 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-// import file model Person
 use App\User;
+use Illuminate\Http\Request;
+use DataTables;
+use Session;
 
 class UserController extends Controller
 {
-    // mengambil semua data
-    public function all()
-    {
-        return User::all();
+    public function getDataTable(){
+        $data = User::where('role', '!=' , 0)->get();
+        return Datatables::of($data)
+            ->addColumn('cRole', function($data){
+                return ($data->role == 0) ? '<span class="badge badge-primary" style="background-color: blue;">Super Admin</span>' : '<span class="badge badge-secondary">Admin</span>' ; 
+            })
+            ->addColumn('cPassword', function(){
+                return '**********';
+            })
+            ->addColumn('action', function($data){
+                return  '<a onclick="editDataUser('. $data->id . ')" style="margin:2px;" class="btn btn-primary btn-xs"> Edit</a>' .
+                        '<a onclick="deleteDataUser('. $data->id . ')" style="margin:2px;" class="btn btn-danger btn-xs ">Delete</a>';
+            })
+            ->addColumn('cCreateDate', function($data){
+                return date("d-m-Y H.i.s", strtotime($data->created_at));
+            })
+            ->addColumn('cUpdateDate', function($data){
+                return date("d-m-Y H.i.s", strtotime($data->updated_at));
+            })
+            ->rawColumns(['cRole', 'action'])
+            ->addIndexColumn()->make(true);
     }
 
-    // mengambil data by id
-    public function show($id)
-    {
-        return User::find($id);
+    public function getById($id) {
+        $result = User::where('id', $id);
+        if ($result->exists()){
+            return response($result->get());
+        } else {
+            return response(['status' => false]);
+        }
     }
 
-    // menambah data
-    public function store(Request $request)
-    {
-        return User::create($request->all());
+    public function delete(Request $request) {
+        $status = User::destroy($request->id);
+        if($status){
+            return response()->json(null);
+        } else {
+            return response()->json($status = 420);
+        }
     }
 
-    // mengubah data
-    public function update($id, Request $request)
+    public function post(Request $request)
     {
-        $user = User::find($id);
-        $user->update($request->all());
-        return $user;
+        $request->merge(['password'=> bcrypt($request->password)]);
+        $status = User::create($request->all());
+        if ($status) {
+            return response(['status' => true]);
+        } else {
+            return response(['status' => false]);
+        }
     }
 
-    // menghapus data
-    public function delete($id)
+    public function update(Request $request) {
+        $status = User::where('id', $request->id)
+                    ->update([
+                        'password' => bcrypt($request->password),
+                    ]);
+        if ($status) {
+            return response(['status' => true]);
+        } else {
+            return response(['status' => false]);
+        }
+    }
+
+    public function checkUsername($username)
     {
-        $user = User::find($id);
-        $user->delete();
-        return 204;
+        $status = User::where('username', $username);
+        if (!$status->exists()){
+            return response(['status' =>true]);
+        } else {
+            return response(['status' => false]);
+        }
     }
 }

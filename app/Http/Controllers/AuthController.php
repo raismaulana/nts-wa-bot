@@ -2,44 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use Session;
+use DB;
 use Illuminate\Http\Request;
-
-// import file model Person
-use App\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // mengambil semua data
-    public function all()
+    public function index()
     {
-        return Auth::all();
+        return view('login');
     }
 
-    // mengambil data by id
-    public function show($id)
-    {
-        return Auth::find($id);
+    public function login(Request $request)
+    {   
+        $u = $request->post('username');
+        $p = $request->post('password');
+
+        $user = DB::table('users')->whereRaw("BINARY `username` = ?",[$u]);
+
+        if ($user->exists()) {
+            $user = $user->first();
+            if (Hash::check($p, $user->password)) {
+                Session::put(['id' => $user->id, 'name' => $user->name, 'username' => $user->username, 'role' => $user->role]);
+                if ($user->role == 1) {
+                    return redirect('home');
+                } else {
+                    return redirect('home');
+                }
+            } else {
+                return redirect('/');
+            }
+        } else {
+            return redirect('/');
+        }
+        // return redirect('home');
     }
 
-    // menambah data
-    public function store(Request $request)
+    public function logout()
     {
-        return Auth::create($request->all());
-    }
-
-    // mengubah data
-    public function update($id, Request $request)
-    {
-        $auth = Auth::find($id);
-        $auth->update($request->all());
-        return $auth;
-    }
-
-    // menghapus data
-    public function delete($id)
-    {
-        $auth = Auth::find($id);
-        $auth->delete();
-        return 204;
+        Session::flush();
+        return redirect('/');
     }
 }

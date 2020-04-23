@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Response extends Model
 {
-    protected $table = 'response';
-    protected $fillable = ['code', 'question', 'answer'];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'code', 'question', 'answer', 'created_at', 'updated_at'
+    ];
 }

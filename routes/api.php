@@ -18,5 +18,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// route api chatbot wa
-Route::post('/chat-bot', 'ChatBotController@listenToReplies');
+Route::post('/bot-wa', 'WebServiceBotController@listenToReplies');
+
+Route::get('/phone', 'PhoneController@getDataTable');
+Route::delete('/phone/delete', 'PhoneController@delete');
+Route::get('/response', 'ResponseController@getDataTable');
+Route::get('/response/{id}', 'ResponseController@getById');
+Route::get('/response/check-code/{code}', 'ResponseController@checkCode');
+Route::post('/response/post', 'ResponseController@post');
+Route::post('/response/update', 'ResponseController@update');
+Route::delete('/response/delete', 'ResponseController@delete');
+Route::get('/user', 'UserController@getDataTable');
+Route::get('/user/{id}', 'UserController@getById');
+Route::get('/user/check-username/{username}', 'UserController@checkUsername');
+Route::post('/user/post', 'UserController@post');
+Route::post('/user/update', 'UserController@update');
+Route::delete('/user/delete', 'UserController@delete');
